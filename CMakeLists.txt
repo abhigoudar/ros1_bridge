@@ -16,6 +16,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rmw_implementation_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 # find ROS 1 packages
 set(cmake_extras_files cmake/find_ros1_package.cmake cmake/find_ros1_interface_packages.cmake)
@@ -194,6 +195,14 @@ custom_executable(static_bridge
   TARGET_DEPENDENCIES ${ros2_interface_packages})
 target_link_libraries(static_bridge
   ${PROJECT_NAME})
+
+custom_executable(static_bridge_topic_list
+  "src/static_bridge_topic_list.cpp"
+  ROS1_DEPENDENCIES
+  TARGET_DEPENDENCIES ${ros2_interface_packages})
+target_link_libraries(static_bridge_topic_list
+  ${PROJECT_NAME}
+  yaml-cpp)
 
 custom_executable(parameter_bridge
   "src/parameter_bridge.cpp"
